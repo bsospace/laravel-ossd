@@ -21,15 +21,20 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # คัดลอกโค้ด Laravel ไปที่ /var/www/html
 COPY . /var/www/html
 
+# สร้างโฟลเดอร์ vendor และให้สิทธิ์ root เป็นเจ้าของ
+RUN mkdir -p /var/www/html/vendor \
+    && chown -R root:root /var/www/html/vendor \
+    && chmod -R 777 /var/www/html/vendor
+
+# ติดตั้ง dependencies ของ Laravel (ทำงานเป็น root)
+WORKDIR /var/www/html
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+
 # ตั้งค่า permission ให้กับ Laravel
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html \
     && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-
-# ติดตั้ง dependencies ของ Laravel
-WORKDIR /var/www/html
-RUN composer install --no-dev --optimize-autoloader
 
 # คัดลอกไฟล์ Apache config
 COPY ./000-default.conf /etc/apache2/sites-available/000-default.conf
