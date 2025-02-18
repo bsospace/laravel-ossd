@@ -18,5 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/health', function () {
-    return view('about');
+    return view('health');
 });
