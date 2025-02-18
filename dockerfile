@@ -21,7 +21,7 @@ COPY . /var/www/html/
 WORKDIR /var/www/html
 
 # ติดตั้ง dependencies ของ Laravel
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install
 
 # ตั้งค่าเจ้าของไฟล์และโฟลเดอร์
 RUN chown -R www-data:www-data /var/www/html \
