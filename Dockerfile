@@ -14,10 +14,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "unlink('composer-setup.php');" \
     && mv composer.phar /usr/local/bin/composer  # ย้าย Composer ไปที่ /usr/local/bin เพื่อให้เรียกใช้งานง่ายขึ้น
 
-# ตั้งค่า permission ให้ Laravel สามารถทำงานได้อย่างถูกต้อง
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 /var/www/html \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# เปลี่ยนเจ้าของไฟล์เป็น www-data เพื่อให้ Laravel ใช้งานได้
+RUN chown -R www-data:www-data /var/www/html
 
 # ตั้งค่าตำแหน่งทำงานเป็น /var/www/html
 WORKDIR /var/www/html
