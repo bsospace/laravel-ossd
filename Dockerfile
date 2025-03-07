@@ -25,9 +25,6 @@ WORKDIR /var/www/html
 # ติดตั้ง dependencies ของ Laravel โดยไม่รวมแพ็กเกจที่ใช้สำหรับ development
 RUN composer install --no-dev --optimize-autoloader
 
-# คัดลอกไฟล์ Apache configuration ไปยังตำแหน่งที่ Apache ใช้
-COPY ./000-default.conf /etc/apache2/sites-available/000-default.conf
-
 # เปิดพอร์ต 80 เพื่อให้ container สามารถรับคำขอ HTTP ได้
 EXPOSE 80
 

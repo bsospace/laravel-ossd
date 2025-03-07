@@ -6,11 +6,5 @@ services:
     container_name: laravel-osssd-${CLUSTER_NAME}
     ports:
       - "8080:80"
-    networks:
-      - app-network
     env_file:
       - .env
-
-networks:
-  app-network:
-    driver: bridge
